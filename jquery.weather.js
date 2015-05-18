@@ -36,11 +36,9 @@
                         thisobj.context = canvas.getContext('2d');
                         functions.canvas.initialise();
                     },
-                    initialise: function(){ //handle size of canvas, call on window resize
-                        //make canvas the same size as its parent
+                    initialise: function(){ //make canvas the same size as its parent, call on window resize
                         thisobj.canvas.width = thisobj.$elem.outerWidth();
                         thisobj.canvas.height = thisobj.$elem.outerHeight();
-                        //console.log(thisobj.canvas.width,thisobj.canvas.height);
                     },
                     clearCanvas: function(){
                         thisobj.context.clearRect(0, 0, thisobj.canvas.width, thisobj.canvas.height);//clear the canvas
@@ -128,21 +126,12 @@
                 clearTimeout(resize);
                 resize = setTimeout(functions.general.resizeWindow,200);
         	});
-		},
-
-		//below a given screen size, remove all plugin functionality
-		destroy: function(){
-			console.log('deactivating plugin');
-		},
-
+		}
 	}
-
 	$.fn.weather = function(options){
 		return this.each(function(){
 			new Plugin(this,options).init();
 		});
 	}
-
 	window.Plugin = Plugin;
-
 })(window,jQuery);
