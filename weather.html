@@ -5,18 +5,26 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="initial-scale=1.0">
 
-    <link rel="stylesheet" type="text/css" href="css/styles.css"/>
+    <link rel="stylesheet" type="text/css" href="jquery.weather.css"/>
     <style>
+        .w-wrapper {
+            height:500px;
+            overflow:hidden;
+            background:silver;
+        }
+        .w-wrapper img {
+            display:block;
+            margin:0 auto;
+            max-width: 100%;
+        }
     </style>
-
 </head>
 
 <body>
-    <div class="weather" id="weather">
-        <img src="background.jpg" class="background"/>
+    <div class="w-wrapper" id="weather">
+        <img src="background.jpg"/>
     </div>
     <a href="http://magdeleine.co/photo-jay-mantri-n-222/">Image credit</a>
-
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="jquery.weather.js"></script>
@@ -25,6 +33,5 @@
             $('#weather').weather();
         });
     </script>
-
 </body>
 </html>
