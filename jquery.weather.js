@@ -1,4 +1,7 @@
 /*
+    latest changes
+    - now allows multiple instances on one page
+    - drop density adjusted
 */
 (function (window,$) {
 	var Plugin = function(elem,options){
@@ -20,20 +23,21 @@
 			this.settings = $.extend({
 				weatherType: "rain",
 				dropDensity: 5, //density of drops
-				colour: '#000000', //can be a hex value or a string e.g. 'green'
+				colour: '#000000', //can be a hex value, rgba or string e.g. 'green'
 				speed: 15,
 				wind: -5, //generally a higher wind speed looks better with a higher speed
 				dropwidth: 1,
 				dropheight: 4
 			}, this.defaults, this.options);
-			
+
 			var functions = {
                 canvas: {
                     initCanvas: function(){ // create canvas and get context
-                        var $canvas = $('<canvas/>').addClass('w-canvas').attr('id','canvas');
+                        var canvasname = 'canvas' + Date.now(); //generate a unique canvas name, needed for multiple instances
+                        var $canvas = $('<canvas/>').addClass('w-canvas').attr('id',canvasname);
                         $canvas.appendTo(thisobj.$elem);
-                        thisobj.canvas = document.getElementById('canvas');
-                        thisobj.context = canvas.getContext('2d');
+                        thisobj.canvas = document.getElementById(canvasname);
+                        thisobj.context = thisobj.canvas.getContext('2d');
                         functions.canvas.initialise();
                     },
                     initialise: function(){ //make canvas the same size as its parent, call on window resize
@@ -53,7 +57,7 @@
                     },
                     initDrops: function(){ //create array to store position of drops and initialise related variables
                         //init drop density
-                        var dropdensity = (thisobj.canvas.width / 10) * thisobj.settings.dropDensity;
+                        var dropdensity = (thisobj.canvas.width / 100) * thisobj.settings.dropDensity;
                         // set start and end point for falling drops
                         thisobj.minstart = -10;
                         thisobj.maxstop = thisobj.canvas.height + 10;

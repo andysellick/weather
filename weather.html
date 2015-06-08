@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css" href="jquery.weather.css"/>
     <style>
         .w-wrapper {
+            float:left;
             height:500px;
             overflow:hidden;
             background:silver;
@@ -17,20 +18,28 @@
             margin:0 auto;
             max-width: 100%;
         }
+        p {
+            clear:both;
+        }
     </style>
 </head>
 
 <body>
-    <div class="w-wrapper" id="weather">
+    <div class="w-wrapper doweather">
         <img src="background.jpg"/>
     </div>
-    <a href="http://magdeleine.co/photo-jay-mantri-n-222/">Image credit</a>
+
+    <div class="w-wrapper doweather">
+        <img src="background.jpg"/>
+    </div>
+
+    <p><a href="http://magdeleine.co/photo-jay-mantri-n-222/">Image credit</a></p>
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="jquery.weather.js"></script>
     <script>
         $(document).ready(function(){
-            $('#weather').weather();
+            $('.doweather').weather();
         });
     </script>
 </body>
