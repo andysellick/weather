@@ -6,15 +6,17 @@ A plugin to add weather effects to a webpage. Note: this plugin is unfinished an
 Usage
 -----
 
-$('#weather').weather();
+```html
+<div class="w-wrapper" id="weather">
+    <img src="background.jpg"/>
+</div>
 
-
-Markup
-------
-
-&lt;div class="w-wrapper" id="weather"&gt;
-    &lt;img src="background.jpg"/&gt;
-&lt;/div&gt;
+<script>
+    $(document).ready(function(){
+        $('#weather').weather();
+    });
+</script>
+```
 
 Note that either the height of the element must be set in CSS or determined by an image inside it. CSS is unfinalised.
 
