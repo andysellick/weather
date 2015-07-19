@@ -24,9 +24,9 @@ Note that either the height of the element must be set in CSS or determined by a
 Options
 -------
 
-- dropDensity: density of drops, defaults to 5
-- colour: can be a hex value or a string e.g. 'green' or '#000000'
-- speed: speed of drop fall, defaults to 15
-- wind: causes the drops to fall at an angle. 0 for no wind (falls straight) or accepts any positive or negative number, up to a sensible amount, anything beyond 20 just flies across the screen. Generally a higher wind speed looks better with a higher speed.
-- dropwidth: defaults to 1, not really worth changing
-- dropheight: defaults to 4, not really worth changing
+- **dropDensity**: density of drops, defaults to 5
+- **colour**: can be a hex value or a string e.g. 'green' or '#000000'
+- **speed**: speed of drop fall, defaults to 15
+- **wind**: causes the drops to fall at an angle. 0 for no wind (falls straight) or accepts any positive or negative number, up to a sensible amount, anything beyond 20 just flies across the screen. Generally a higher wind speed looks better with a higher speed.
+- **dropwidth**: defaults to 1, not really worth changing
+- **dropheight**: defaults to 4, not really worth changing
