@@ -39,7 +39,10 @@
     <script src="jquery.weather.js"></script>
     <script>
         $(document).ready(function(){
-            $('.doweather').weather();
+            $('.doweather').weather({
+                dropDensity: 50,
+                speed: 15
+            });
         });
     </script>
 </body>

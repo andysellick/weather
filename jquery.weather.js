@@ -22,8 +22,7 @@
 
 			this.settings = $.extend({
 				weatherType: "rain",
-				dropDensity: 5, //density of drops
-				colour: '#000000', //can be a hex value, rgba or string e.g. 'green'
+				dropDensity: 50, //density of drops
 				speed: 15,
 				wind: -5, //generally a higher wind speed looks better with a higher speed
 				dropwidth: 1,
@@ -59,8 +58,8 @@
                         //init drop density
                         var dropdensity = (thisobj.canvas.width / 100) * thisobj.settings.dropDensity;
                         // set start and end point for falling drops
-                        thisobj.minstart = -10;
-                        thisobj.maxstop = thisobj.canvas.height + 10;
+                        thisobj.minstart = -20;
+                        thisobj.maxstop = thisobj.canvas.height + 20;
                         thisobj.spacing = thisobj.canvas.width / dropdensity;
                         //init array of drops
                         thisobj.drops = [];
@@ -79,16 +78,16 @@
                     },
                     drawloop: function(){ //self calling function that animates the falling precipitation
                         functions.canvas.clearCanvas();
-                        var rand = 0; //controls the slight variation in the length and speed of some of the drops. Taller (ie. closer) drops fall quicker, giving the illusion of depth
+                        var rand = 0.33; //controls the variation in size and speed of the drops. Taller (ie. closer) drops fall quicker, giving the illusion of depth
         
                         for(var i = 0; i < thisobj.drops.length; i++){
+                            thisobj.drops[i][1] = thisobj.drops[i][1] + thisobj.settings.speed + (rand * 3); //speed of fall
                             if(thisobj.drops[i][1] > thisobj.maxstop){ //reset to top
                                 thisobj.drops[i][1] = thisobj.minstart;
                             }
-                            thisobj.drops[i][1] = thisobj.drops[i][1] + thisobj.settings.speed + rand;
-        
+
                             thisobj.context.save();
-                            thisobj.context.fillStyle = thisobj.settings.colour;
+                            thisobj.context.fillStyle = 'rgba(0,0,0,' + rand + ')';//thisobj.settings.colour;
                             /* do slightly more complex stuff to translate and rotate drops if wind present */
                             if(thisobj.settings.wind){
                                 thisobj.drops[i][0] += (thisobj.settings.wind / 2);
@@ -107,9 +106,9 @@
                             }
                             thisobj.context.restore();
         
-                            rand += 0.25;
-                            if(rand > 2){
-                                rand = 0;
+                            rand += 0.33;
+                            if(rand > 1){
+                                rand = 0.33;
                             }
                         }
                         gameloop = setTimeout(functions.general.drawloop,40); //repeat
