@@ -29,7 +29,7 @@
         <img src="background.jpg"/>
     </div>
 
-    <div class="w-wrapper doweather">
+    <div class="w-wrapper doweather2">
         <img src="background.jpg"/>
     </div>
 
@@ -39,9 +39,11 @@
     <script src="jquery.weather.js"></script>
     <script>
         $(document).ready(function(){
-            $('.doweather').weather({
-                dropDensity: 50,
-                speed: 15
+            $('.doweather').weather();
+            $('.doweather2').weather({
+                speed: 7,
+                dropDensity: 10,
+                wind: 0
             });
         });
     </script>

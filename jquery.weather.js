@@ -22,11 +22,11 @@
 
 			this.settings = $.extend({
 				weatherType: "rain",
-				dropDensity: 50, //density of drops
-				speed: 15,
+				dropDensity: 40, //density of drops
+				speed: 10,
 				wind: -5, //generally a higher wind speed looks better with a higher speed
 				dropwidth: 1,
-				dropheight: 4
+				dropheight: 2
 			}, this.defaults, this.options);
 
 			var functions = {
@@ -78,10 +78,10 @@
                     },
                     drawloop: function(){ //self calling function that animates the falling precipitation
                         functions.canvas.clearCanvas();
-                        var rand = 0.33; //controls the variation in size and speed of the drops. Taller (ie. closer) drops fall quicker, giving the illusion of depth
+                        var rand = 0.2; //controls the variation in size and speed of the drops. Taller (ie. closer) drops fall quicker and are bigger, giving the illusion of depth. In theory.
         
                         for(var i = 0; i < thisobj.drops.length; i++){
-                            thisobj.drops[i][1] = thisobj.drops[i][1] + thisobj.settings.speed + (rand * 3); //speed of fall
+                            thisobj.drops[i][1] = thisobj.drops[i][1] + thisobj.settings.speed + (rand * 10); //speed of fall
                             if(thisobj.drops[i][1] > thisobj.maxstop){ //reset to top
                                 thisobj.drops[i][1] = thisobj.minstart;
                             }
@@ -99,16 +99,16 @@
                                 thisobj.context.translate(thisobj.drops[i][0], thisobj.drops[i][1]);
                                 thisobj.context.rotate(-thisobj.settings.wind * Math.PI / 90);
                                 //we draw this point at 0,0 because the context has already been translated to the position where we want to draw the drop
-                                thisobj.context.fillRect(0,0, thisobj.settings.dropwidth, thisobj.settings.dropheight + rand);
+                                thisobj.context.fillRect(0,0, thisobj.settings.dropwidth, thisobj.settings.dropheight + (rand * 8)); //size of drop
                             }
                             else {
-                                thisobj.context.fillRect(thisobj.drops[i][0],thisobj.drops[i][1], thisobj.settings.dropwidth, thisobj.settings.dropheight + rand);
+                                thisobj.context.fillRect(thisobj.drops[i][0],thisobj.drops[i][1], thisobj.settings.dropwidth, thisobj.settings.dropheight + (rand * 8));
                             }
                             thisobj.context.restore();
         
-                            rand += 0.33;
+                            rand += 0.2;
                             if(rand > 1){
-                                rand = 0.33;
+                                rand = 0.2;
                             }
                         }
                         gameloop = setTimeout(functions.general.drawloop,40); //repeat
