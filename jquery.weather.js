@@ -19,12 +19,14 @@
             this.minstart;
             this.maxstop;
             this.drops;
+            this.dropDarkness = [];
 
 			this.settings = $.extend({
 				weatherType: "rain",
 				dropDensity: 40, //density of drops
 				speed: 10,
 				wind: -5, //generally a higher wind speed looks better with a higher speed
+				dropDarkness: 0.5,
 				dropwidth: 1,
 				dropheight: 2
 			}, this.defaults, this.options);
@@ -53,6 +55,8 @@
                             thisobj.settings.wind = 35;
             			if(thisobj.settings.wind < -35)
                             thisobj.settings.wind = -35;
+                        if(thisobj.settings.dropDarkness > 1 || thisobj.settings.dropDarkness < 0)
+                            thisobj.settings.dropDarkness = 1;
                     },
                     initDrops: function(){ //create array to store position of drops and initialise related variables
                         //init drop density
@@ -67,6 +71,11 @@
                             thisobj.drops.push([thisobj.spacing * i,functions.general.randomIntFromInterval(thisobj.minstart,thisobj.maxstop)]);
                         }
                         //console.log(thisobj.drops.length,"number of drops");
+                        
+                        //initialise drop darkness - FIXME
+                        thisobj.dropDarkness.push(thisobj.settings.dropDarkness);
+                        thisobj.dropDarkness.push((thisobj.settings.dropDarkness / 3) * 2);
+                        thisobj.dropDarkness.push(thisobj.settings.dropDarkness / 3);
                     },
                     //return a random number
                     randomIntFromInterval: function(min,max){
@@ -79,7 +88,8 @@
                     drawloop: function(){ //self calling function that animates the falling precipitation
                         functions.canvas.clearCanvas();
                         var rand = 0.2; //controls the variation in size and speed of the drops. Taller (ie. closer) drops fall quicker and are bigger, giving the illusion of depth. In theory.
-        
+                        var dd = 0; //switches between the darkness settings for the drops
+
                         for(var i = 0; i < thisobj.drops.length; i++){
                             thisobj.drops[i][1] = thisobj.drops[i][1] + thisobj.settings.speed + (rand * 10); //speed of fall
                             if(thisobj.drops[i][1] > thisobj.maxstop){ //reset to top
@@ -87,7 +97,8 @@
                             }
 
                             thisobj.context.save();
-                            thisobj.context.fillStyle = 'rgba(0,0,0,' + rand + ')';//thisobj.settings.colour;
+                            thisobj.context.fillStyle = 'rgba(0,0,0,' + thisobj.dropDarkness[dd] + ')';//thisobj.settings.colour;
+                            //console.log(thisobj.dropDarkness[dd]);
                             /* do slightly more complex stuff to translate and rotate drops if wind present */
                             if(thisobj.settings.wind){
                                 thisobj.drops[i][0] += (thisobj.settings.wind / 2);
@@ -109,6 +120,10 @@
                             rand += 0.2;
                             if(rand > 1){
                                 rand = 0.2;
+                            }
+                            dd += 1;
+                            if(dd >= thisobj.dropDarkness.length){
+                                dd = 0;
                             }
                         }
                         gameloop = setTimeout(functions.general.drawloop,40); //repeat
