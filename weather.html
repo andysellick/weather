@@ -4,12 +4,9 @@
     <title>Weather</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="initial-scale=1.0">
-
-    <link rel="stylesheet" type="text/css" href="jquery.weather.css"/>
     <style>
         .w-wrapper {
             float:left;
-            height:500px;
             overflow:hidden;
             background:silver;
         }
@@ -25,27 +22,27 @@
 </head>
 
 <body>
-    <div class="w-wrapper doweather">
+    <div id="doweather1" class="w-wrapper">
         <img src="background.jpg"/>
     </div>
 
-    <div class="w-wrapper doweather2">
+    <div id="doweather2" class="w-wrapper">
         <img src="background.jpg"/>
     </div>
 
     <p><a href="http://magdeleine.co/photo-jay-mantri-n-222/">Image credit</a></p>
 
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="jquery.weather.js"></script>
     <script>
-        $(document).ready(function(){
-            $('.doweather').weather();
-            $('.doweather2').weather({
-                speed: 7,
-                dropDensity: 10,
-                wind: 0
-            });
-        });
+		var options = {
+			speed: 1,
+			dropDensity: 10,
+			wind: 0,
+			dropColor: [255,255,255],
+			dropHeight: 1
+		};
+		new weatherObj(document.getElementById('doweather1'),{});
+		new weatherObj(document.getElementById('doweather2'),options);
     </script>
 </body>
 </html>
