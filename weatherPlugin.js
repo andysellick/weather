@@ -1,4 +1,4 @@
-
+/* plugin to create rain effect on a webpage. https://github.com/andysellick/weather */
 function weatherObj(element,options){
 	this.el = element;
 	this.canvas;
