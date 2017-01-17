@@ -1,14 +1,14 @@
 /* plugin to create rain effect on a webpage. https://github.com/andysellick/weather */
 function weatherObj(element,options){
 	this.el = element;
-	this.canvas;
-	this.context;
-	this.spacing;
-	this.minstart;
-	this.maxstop;
-	this.drops;
+	//this.canvas;
+	//this.context;
+	//this.spacing;
+	//this.minstart;
+	//this.maxstop;
+	//this.drops;
 	this.dropDarkness = [];
-	this.resize;
+	this.resize = 0;
 	this.settings = {
 		dropDensity: (typeof options.dropDensity === 'undefined') ? 40 : options.dropDensity, //density of drops
 		dropColor: (typeof options.dropColor === 'undefined') ? [0,0,0] : options.dropColor, //density of drops
@@ -18,6 +18,7 @@ function weatherObj(element,options){
 		dropWidth: (typeof options.dropWidth === 'undefined') ? 1 : options.dropWidth,
 		dropHeight: (typeof options.dropHeight === 'undefined') ? 2 : options.dropHeight
 	};
+	var ths = this;
 	this.functions = {
 		canvas: {
 			init: function(){
@@ -49,14 +50,18 @@ function weatherObj(element,options){
 		},
 		general: {
 			overrideSettings: function(){ //prevent settings abuse
-				if(ths.settings.wind > 35)
+				if(ths.settings.wind > 35){
 					ths.settings.wind = 35;
-				if(ths.settings.wind < -35)
+				}
+				if(ths.settings.wind < -35){
 					ths.settings.wind = -35;
-				if(ths.settings.dropDarkness > 1 || ths.settings.dropDarkness < 0)
+				}
+				if(ths.settings.dropDarkness > 1 || ths.settings.dropDarkness < 0){
 					ths.settings.dropDarkness = 1;
-				if(ths.settings.dropColor.constructor !== Array || ths.settings.dropColor.length !== 3)
+				}
+				if(ths.settings.dropColor.constructor !== Array || ths.settings.dropColor.length !== 3){
 					ths.settings.dropColor = [0,0,0];
+				}
 			},
 			initDrops: function(){ //create array to store position of drops and initialise related variables
 				//init drop density
@@ -71,7 +76,7 @@ function weatherObj(element,options){
 					ths.drops.push([ths.spacing * i,ths.functions.general.randomIntFromInterval(ths.minstart,ths.maxstop)]);
 				}
 				//console.log(thisobj.drops.length,"number of drops");
-				
+
 				//initialise drop darkness - FIXME
 				ths.dropDarkness.push(ths.settings.dropDarkness);
 				ths.dropDarkness.push((ths.settings.dropDarkness / 3) * 2);
@@ -102,10 +107,12 @@ function weatherObj(element,options){
 					/* do slightly more complex stuff to translate and rotate drops if wind present */
 					if(ths.settings.wind){
 						ths.drops[i][0] += (ths.settings.wind / 2);
-						if(ths.drops[i][0] > ths.canvas.width)
+						if(ths.drops[i][0] > ths.canvas.width){
 							ths.drops[i][0] = 0;
-						if(ths.drops[i][0] < 0)
+						}
+						if(ths.drops[i][0] < 0){
 							ths.drops[i][0] = ths.canvas.width;
+						}
 			
 						ths.context.translate(ths.drops[i][0], ths.drops[i][1]);
 						ths.context.rotate(-ths.settings.wind * Math.PI / 90);
@@ -130,7 +137,6 @@ function weatherObj(element,options){
 			}
 		}
 	};
-	var ths = this;
 
 	window.addEventListener('load', function() {
 		ths.functions.canvas.init();
