@@ -34,6 +34,7 @@ function weatherObj(element,options){
 				ths.canvas.style.position = 'absolute';
 				ths.canvas.style.top = 0;
 				ths.canvas.style.left = 0;
+				ths.canvas.setAttribute('aria-hidden', 'true'); // otherwise screen readers announce "image" unnecessarily
 				ths.el.style.position = 'relative'; //parent element
 
 				ths.el.appendChild(ths.canvas);
@@ -94,7 +95,7 @@ function weatherObj(element,options){
 				ths.functions.canvas.clearCanvas();
 				var rand = 0.2; //controls the variation in size and speed of the drops. Taller (ie. closer) drops fall quicker and are bigger, giving the illusion of depth. In theory.
 				var dd = 0; //switches between the darkness settings for the drops
-			
+
 				for(var i = 0; i < ths.drops.length; i++){
 					ths.drops[i][1] = ths.drops[i][1] + ths.settings.speed + (rand * 10); //speed of fall
 					if(ths.drops[i][1] > ths.maxstop){ //reset to top
@@ -113,7 +114,7 @@ function weatherObj(element,options){
 						if(ths.drops[i][0] < 0){
 							ths.drops[i][0] = ths.canvas.width;
 						}
-			
+
 						ths.context.translate(ths.drops[i][0], ths.drops[i][1]);
 						ths.context.rotate(-ths.settings.wind * Math.PI / 90);
 						//we draw this point at 0,0 because the context has already been translated to the position where we want to draw the drop
@@ -123,7 +124,7 @@ function weatherObj(element,options){
 						ths.context.fillRect(ths.drops[i][0],ths.drops[i][1], ths.settings.dropWidth, ths.settings.dropHeight + (rand * 8));
 					}
 					ths.context.restore();
-			
+
 					rand += 0.2;
 					if(rand > 1){
 						rand = 0.2;
