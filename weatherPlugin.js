@@ -1,24 +1,20 @@
 /* plugin to create rain effect on a webpage. https://github.com/andysellick/weather */
 function weatherObj(element,options){
 	this.el = element;
-	//this.canvas;
-	//this.context;
-	//this.spacing;
-	//this.minstart;
-	//this.maxstop;
-	//this.drops;
 	this.dropDarkness = [];
 	this.resize = 0;
 	this.settings = {
 		dropDensity: (typeof options.dropDensity === 'undefined') ? 40 : options.dropDensity, //density of drops
 		dropColor: (typeof options.dropColor === 'undefined') ? [0,0,0] : options.dropColor, //density of drops
 		speed: (typeof options.speed === 'undefined') ? 10 : options.speed,
-		wind: (typeof options.wind === 'undefined') ? -5 : options.wind, //generally a higher wind speed looks better with a higher speed
+		wind: (typeof options.wind === 'undefined') ? -5 : options.wind, //a higher wind speed looks better with a higher speed
 		dropDarkness: (typeof options.dropDarkness === 'undefined') ? 0.5 : options.dropDarkness,
 		dropWidth: (typeof options.dropWidth === 'undefined') ? 1 : options.dropWidth,
 		dropHeight: (typeof options.dropHeight === 'undefined') ? 2 : options.dropHeight
 	};
+
 	var ths = this;
+
 	this.functions = {
 		canvas: {
 			init: function(){
@@ -27,6 +23,7 @@ function weatherObj(element,options){
 				ths.functions.general.initDrops();
 				ths.functions.general.drawloop();
 			},
+
 			initCanvas: function(){ // create canvas and get context
 				ths.canvas = document.createElement('canvas');
 				ths.canvas.className = 'w-canvas';
@@ -41,10 +38,12 @@ function weatherObj(element,options){
 				ths.context = ths.canvas.getContext('2d');
 				ths.functions.canvas.initialise();
 			},
+
 			initialise: function(){ //make canvas the same size as its parent, call on window resize
 				ths.canvas.width = ths.el.offsetWidth;
 				ths.canvas.height = ths.el.offsetHeight;
 			},
+
 			clearCanvas: function(){
 				ths.context.clearRect(0, 0, ths.canvas.width, ths.canvas.height);//clear the canvas
 			}
@@ -64,6 +63,7 @@ function weatherObj(element,options){
 					ths.settings.dropColor = [0,0,0];
 				}
 			},
+
 			initDrops: function(){ //create array to store position of drops and initialise related variables
 				//init drop density
 				var dropdensity = (ths.canvas.width / 100) * ths.settings.dropDensity;
@@ -83,14 +83,17 @@ function weatherObj(element,options){
 				ths.dropDarkness.push((ths.settings.dropDarkness / 3) * 2);
 				ths.dropDarkness.push(ths.settings.dropDarkness / 3);
 			},
+
 			//return a random number
 			randomIntFromInterval: function(min,max){
 				return Math.floor(Math.random()*(max-min+1)+min);
 			},
+
 			resizeWindow: function(){
 				ths.functions.canvas.initialise();
 				ths.functions.general.initDrops();
 			},
+
 			drawloop: function(){ //self calling function that animates the falling precipitation
 				ths.functions.canvas.clearCanvas();
 				var rand = 0.2; //controls the variation in size and speed of the drops. Taller (ie. closer) drops fall quicker and are bigger, giving the illusion of depth. In theory.
@@ -98,6 +101,7 @@ function weatherObj(element,options){
 
 				for(var i = 0; i < ths.drops.length; i++){
 					ths.drops[i][1] = ths.drops[i][1] + ths.settings.speed + (rand * 10); //speed of fall
+
 					if(ths.drops[i][1] > ths.maxstop){ //reset to top
 						ths.drops[i][1] = ths.minstart;
 					}
@@ -123,12 +127,14 @@ function weatherObj(element,options){
 					else {
 						ths.context.fillRect(ths.drops[i][0],ths.drops[i][1], ths.settings.dropWidth, ths.settings.dropHeight + (rand * 8));
 					}
+
 					ths.context.restore();
 
 					rand += 0.2;
 					if(rand > 1){
 						rand = 0.2;
 					}
+
 					dd += 1;
 					if(dd >= ths.dropDarkness.length){
 						dd = 0;
